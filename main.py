@@ -21,7 +21,8 @@ class User(Base):
  
 # import pdb;pdb.set_trace()
 Base.metadata.create_all(engine)
- 
+
+# Creating multiple users
 user = [ User(name='Yash', email='yashmehrotra95@gmail.com'),
          User(name='Avijit', email='526avijit@gmail.com'),
          User(name='Bruce', email='bruce@wayne.com') ]
@@ -36,6 +37,7 @@ print 'All users so far:'
 for row in query:
     print row.name, row.email
 
+# Updating a user through filtering
 query = session.query(User).filter(User.email == 'yashmehrotra95@gmail.com')[0]
 query.name = 'Yash Mehrotra'
 session.add(query)
@@ -46,4 +48,12 @@ print '\nAll users after update:'
 for row in query:
     print row.name, row.email
 
+# Deleting a user through filtering
+query = session.query(User).filter(User.email == 'yashmehrotra95@gmail.com')[0]
+
+session.delete(query)
+query = session.query(User)
+print '\nAll users after delete:'
+for row in query:
+    print row.name, row.email
 session.close()
